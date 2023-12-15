@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My weather forecast</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    
+    <body>
+
+        <div class="container">
+            
+            <div class="inner-container-top">
+                <div class="inner-top-text">
+                <h1 class="title">COME RAIN OR SHINE</h1>
+                <h2 class="subtitle"> Your online weather station</h2>
+                <p class="title-paragraph">Umbrella or sun cream? Find out what the weather will be in your location within the hour, the next 48 hours or the next 8 days.</p>
+                </div>
+                <img class="image-top" src="/images/top-image.jpg" alt="image" width="250"/>
+            </div>
+            
+            <div class="middle">
+                <div class="div-middle">
+                    <h1 class="date"><%=date%></h1>
+                    <img class="calendar" src="/images/calendar.png" alt="image" width="100"/>
+                </div>
+
+                <div class="inner-container-middle">
+
+                    <h3 class="instruction">Enter the name of your location and select the time of measurement</h3>
+                    <form action="/submit" method="POST">
+                        <label for="place">City Name</label>
+                        <input type="text" id="place" name="place" placeholder="Enter the name of a city" required><br/>
+                        <label for="time">Time of measurement</label>
+                        <div class="radio-container">
+                        <input type="radio" id="current" name="time" value="current">
+                        <label for="current">Current</label><br/>
+                        <input type="radio" id="48-hours" name="time" value="48-hours">
+                        <label for="48-hours">Next 48 hours</label><br/>
+                        <input type="radio" id="next-week" name="time" value="next-week">
+                        <label for="next-week">Next 8 days</label><br/>
+                        </div>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="inner-container-bottom">
+
+                    
+                <% if (locals.data) { %>
+
+                    <% if (time === "current") { %>
+                        <h2 class="current-title">Current weather conditions</h2>
+                        <div class="current-container">
+                            <p id="label1">Conditions:</p>
+                            <p id="data1"><%=currrentWeath.replace(/"/g, '')%></p>
+                            <p id="label2">Current temperature:</p>
+                            <p id="data2"><%=currentTemp%> °C</p>
+                            <p id="label3">Feel like:</p>
+                            <p id="data3"><%=currentFeel%> °C</p>
+                            <p id="label4">Humidity:</p>
+                            <p id="data4"><%=currentHum%> %</p>
+                            <p id="label5">Cloudiness:</p>
+                            <p id="data5"><%=currentClouds%> %</p>
+                            <p id="desc"><%=currentDesc.replace(/"/g, '')%></p>
+                            <img id="weather-icon" src="https://openweathermap.org/img/wn/<%=currentIcon.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                        </div>
+
+                    <% } %>
+
+                    <% if (time === "48-hours") { %>
+                        <h2 class="twoDays-title">Weather forecast for the next two days</h2>
+                        <div class="twoDays-container">
+                            <h3 id="day1"><%=formattedHourTime1.replace(/"/g, '')%></h3>
+                            <div class="dayLabel1">
+                                <p class="dayLabel">Conditions:</p>
+                                <p class="dayLabel">Temperature: </p>
+                                <p class="dayLabel">Feel like:</p>
+                                <p class="dayLabel">Humidity:</p>
+                                <p class="dayLabel">Cloudiness: </p>
+                            </div>
+                           
+                            <div class="dayData1">
+                                <p class="dayData"><%=hourWeather1.replace(/"/g, '')%></p>                           
+                                <p class="dayData"><%=hourTemp1%> °C</p>
+                                <p class="dayData"><%=hourFeelLike1%> °C</p>
+                                <p class="dayData"><%=hourWeatherHum1%> %</p>
+                                <p class="dayData"><%=hourWeatherClouds1%> %</p>
+                            </div>
+
+                            <div class="dayDesc">
+                                <p class="dayDesc"><%=hourWeatherDesc1.replace(/"/g, '')%></p>
+                                <img class="dayWeatherIcon" src="https://openweathermap.org/img/wn/<%=hourWeatherIcon1.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                            </div>
+                            
+
+                            <h3 id="day2"><%=formattedHourTime2.replace(/"/g, '')%></h3>
+                            <div class="dayLabel2">
+                                <p class="day2Label">Conditions:</p>
+                                <p class="day2Label">Temperature: </p>
+                                <p class="day2Label">Feel like:</p>
+                                <p class="day2Label">Humidity:</p>
+                                <p class="day2Label">Cloudiness:</p>
+                            </div>
+                            
+                            <div class="dayData2">
+                                <p class="day2Data"><%=hourWeather2.replace(/"/g, '')%></p>
+                                <p class="day2Data"><%=hourTemp2%> °C</p>
+                                <p class="day2Data"><%=hourFeelLike2%> °C </p>
+                                <p class="day2Data"><%=hourWeatherHum2%> %</p>
+                                <p class="day2Data"><%=hourWeatherClouds2%> %</p>
+                            </div>
+
+                            <div class="day2Desc">
+                                <p class="day2Desc"><%=hourWeatherDesc2.replace(/"/g, '')%></p>
+                                <img class="day2WeatherIcon" src="https://openweathermap.org/img/wn/<%=hourWeatherIcon2.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                            </div>
+                        </div>
+                    <% } %>
+
+                    <% if (time === "next-week") { %>
+                        <h2 class="week-title">Weather forecast for the next 8 days</h2>
+                        <div class="week">
+                            <div class="day">
+                                <h3 class="Day"><%=formatteddayTime1.replace(/"/g, '')%></h3>
+                                <div class="inner-week">
+                                    <p><%=dayWeather1.replace(/"/g, '')%></p>
+                                    <p><%=daySum1.replace(/"/g, '')%></p>
+                                    <p class="data">Temp: <%=dayTemp1%> °C</p>
+                                    <p class="data">Feel like: <%=dayFeelLike1%> °C</p>
+                                    <p class="data">Humidity: <%=dayHum1%> %</p>
+                                    <p class="data">Cloudiness: <%=dayClouds1%> %</p>
+                                    <p><%=dayWeatherDesc1.replace(/"/g, '')%></p>
+                                </div>
+                                <div class="week-img">
+                                    <img src="https://openweathermap.org/img/wn/<%=dayWeatherIcon1.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                                </div>
+                            </div>
+
+                            <div class="day">
+                                <h3 class="Day2"><%=formatteddayTime2.replace(/"/g, '')%></h3>
+                                <div class="inner-week">
+                                    <p><%=dayWeather2.replace(/"/g, '')%></p>
+                                    <p><%=daySum2.replace(/"/g, '')%></p>
+                                    <p class="data">Temp: <%=dayTemp2%> °C</p>
+                                    <p class="data">Feel like: <%=dayFeelLike2%> °C</p>
+                                    <p class="data">Humidity: <%=dayHum2%> %</p>
+                                    <p class="data" >Cloudiness: <%=dayClouds2%> %</p>
+                                    <p><%=dayWeatherDesc2.replace(/"/g, '')%></p>
+                                </div>
+                                <div class="week-img">
+                                    <img src="https://openweathermap.org/img/wn/<%=dayWeatherIcon2.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                                </div>
+                            </div>
+
+                            <div class="day">
+                                <h3 class="Day3"><%=formatteddayTime3.replace(/"/g, '')%></h3>
+                                <div class="inner-week">
+                                    <p><%=dayWeather3.replace(/"/g, '')%></p>
+                                    <p><%=daySum3.replace(/"/g, '')%></p>
+                                    <p class="data">Temp: <%=dayTemp3%> °C</p>
+                                    <p class="data">Feel like: <%=dayFeelLike3%> °C</p>
+                                    <p class="data">Humidity: <%=dayHum3%> %</p>
+                                    <p class="data">Cloudiness: <%=dayClouds3%> %</p>
+                                    <p><%=dayWeatherDesc3.replace(/"/g, '')%></p>
+                                </div>
+                                <div class="week-img">                            
+                                    <img src="https://openweathermap.org/img/wn/<%=dayWeatherIcon3.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                                </div>
+                            </div>
+                            
+                            <div class="day">
+                                <h3 class="Day4"><%=formatteddayTime4.replace(/"/g, '')%></h3>
+                                <div class="inner-week">
+                                    <p><%=dayWeather4.replace(/"/g, '')%></p>
+                                    <p><%=daySum4.replace(/"/g, '')%></p>
+                                    <p class="data">Temp: <%=dayTemp4%> °C</p>
+                                    <p class="data">Feel like: <%=dayFeelLike4%> °C</p>
+                                    <p class="data">Humidity: <%=dayHum4%> %</p>
+                                    <p class="data">Cloudiness: <%=dayClouds4%> %</p>
+                                    <p><%=dayWeatherDesc4.replace(/"/g, '')%></p>
+                                </div>
+                                <div class="week-img">
+                                    <img src="https://openweathermap.org/img/wn/<%=dayWeatherIcon4.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                                </div>
+                            </div>
+
+                            <div class="day">
+                                <h3 class="Day5" ><%=formatteddayTime5.replace(/"/g, '')%></h3>
+                                <div class="inner-week">
+                                    <p><%=dayWeather5.replace(/"/g, '')%></p>
+                                    <p><%=daySum5.replace(/"/g, '')%></p>
+                                    <p class="data">Temp: <%=dayTemp5%> °C</p>
+                                    <p class="data">Feel like: <%=dayFeelLike5%> °C</p>
+                                    <p class="data">Humidity: <%=dayHum5%> %</p>
+                                    <p class="data">Cloudiness: <%=dayClouds5%> %</p>
+                                    <p><%=dayWeatherDesc5.replace(/"/g, '')%></p>
+                                </div>
+                                <div class="week-img">
+                                    <img src="https://openweathermap.org/img/wn/<%=dayWeatherIcon5.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                                </div>
+                            </div>
+
+                            <div class="day">
+                                <h3 class="Day6"><%=formatteddayTime6.replace(/"/g, '')%></h3>
+                                <div class="inner-week">
+                                    <p><%=dayWeather6.replace(/"/g, '')%></p>
+                                    <p><%=daySum6.replace(/"/g, '')%></p>
+                                    <p class="data">Temperature: <%=dayTemp6%> °C</p>
+                                    <p class="data" >Feel like: <%=dayFeelLike6%> °C</p>
+                                    <p class="data">Humidity: <%=dayHum6%> %</p>
+                                    <p class="data">Cloudiness: <%=dayClouds6%> %</p>
+                                    <p><%=dayWeatherDesc6.replace(/"/g, '')%></p>
+                                </div>
+                                <div class="week-img">
+                                    <img src="https://openweathermap.org/img/wn/<%=dayWeatherIcon6.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                                </div>
+                            </div>
+
+                            <div class="day">
+                                <h3 class="Day7"><%=formatteddayTime7.replace(/"/g, '')%></h3>
+                                <div class="inner-week">
+                                    <p><%=dayWeather7.replace(/"/g, '')%></p>
+                                    <p><%=daySum7.replace(/"/g, '')%></p>
+                                    <p class="data">Temp: ><%=dayTemp7%> °C</p>
+                                    <p class="data">Feel like:<%=dayFeelLike7%> °C </p>
+                                    <p class="data">Humidity: <%=dayHum7%> %</p>
+                                    <p class="data">Cloudiness: <%=dayClouds7%> %</p>
+                                    <p><%=dayWeatherDesc7.replace(/"/g, '')%></p>
+                                </div>
+                                <div class="week-img">
+                                    <img src="https://openweathermap.org/img/wn/<%=dayWeatherIcon7.replace(/"/g, '')%>@2x.png" alt="weather-icon" width="200" />
+                                </div>
+                            </div>
+                        </div>
+
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+    </body>
+    
+</html>
