@@ -8,8 +8,8 @@ app.set('view engine', 'ejs');
 
 const port = 3000;
 
-const config1 = "APPID=324418ca725ccc0709f41a5cd5d60782"
-const config2 = "APPID=163c27430cca35d834799f593ee00040"
+const config1 = "***"
+const config2 = "****"
 app.use(bodyParser.urlencoded( { extended: true }));
 
 app.use(express.static("public"));
@@ -47,13 +47,13 @@ app.post("/submit", async(req, res) => {
 
         const city = req.body["place"];
         const time = req.body["time"];
-        const geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&APPID=324418ca725ccc0709f41a5cd5d60782`);
+        const geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&APPID=${config1}`);
         const location = geoLocation.data[0];
         const townLat = JSON.stringify(location.lat);
         const townLon = JSON.stringify(location.lon);
 
 
-        const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${townLat}&lon=${townLon}&APPID=163c27430cca35d834799f593ee00040&units=metric`);
+        const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${townLat}&lon=${townLon}&APPID=${config2}&units=metric`);
            
         
         let weather = response.data;
